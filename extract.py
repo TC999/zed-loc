@@ -5,6 +5,7 @@ import os
 # 注：只能在 Windows 系统运行！
 # 定义文件路径列表
 input_file_paths = [
+    # 使用正斜杠路径确保跨平台兼容性
     # 文件读取规则，读代码时可跳过，如果词条缺失自行添加文件路径
     # activity_indicator
     r'zed\crates\activity_indicator\src\activity_indicator.rs',
@@ -454,7 +455,10 @@ json_data = {}
 
 # 遍历每个文件路径
 for input_file_path in input_file_paths:
+    
     # 读取文件内容
+    if os.name != 'nt':  # 只非Windows系统下替换反斜杠
+        input_file_path = input_file_path.replace('\\', '/')
     if not os.path.exists(input_file_path):
         print(f"File not found: {input_file_path}, skipping.")
         continue
@@ -467,7 +471,7 @@ for input_file_path in input_file_paths:
     matches = re.findall(pattern, content)
 
     # 构建JSON数据
-    json_data[input_file_path.replace('\\', '/')] = {match: "" for match in matches}
+    json_data[os.path.normpath(input_file_path).replace('\\', '/')] = {match: "" for match in matches}
 
 # 将JSON数据写入文件
 with open(output_file_path, 'w', encoding='utf-8') as json_file:
