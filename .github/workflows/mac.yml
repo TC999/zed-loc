@@ -28,15 +28,17 @@ jobs:
           path: zed
           
       - name: 替换
-        run: python3 replace.py
-
-      - name: Xcode
         run: |
-          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          sudo xcodebuild -license accept
+          cd zed
+          python3 replace.py
 
-      - name: Cmake
-        run: brew install cmake
+      # - name: Xcode
+      #   run: |
+      #     sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+      #     sudo xcodebuild -license accept
+
+      # - name: Cmake
+      #   run: brew install cmake
 
       - name: Set release channel to nightly
         run: |
