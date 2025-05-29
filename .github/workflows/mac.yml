@@ -41,6 +41,7 @@ jobs:
 
       - name: Set release channel to nightly
         run: |
+          cd zed
           set -eu
           version=$(git rev-parse --short HEAD)
           echo "Publishing version: ${version} on release channel nightly"
