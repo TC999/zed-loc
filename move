@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# Based on the template in: https://docs.digitalocean.com/reference/api/spaces-api/
-bash -euo pipefail
-source script/lib/blob-store.sh
-
 allowed_targets=("linux-targz" "macos")
 is_allowed_target() {
     for val in "${allowed_targets[@]}"; do
@@ -40,15 +36,15 @@ done
 
 case "$target" in
     macos)
-        mv "target/aarch64-apple-darwin/release/Zed.dmg" "Zed-aarch64.dmg"
-        mv "target/x86_64-apple-darwin/release/Zed.dmg" "Zed-x86_64.dmg"
-        mv "target/latest-sha" "latest-sha"
+        mv "zed/target/aarch64-apple-darwin/release/Zed.dmg" "Zed-aarch64.dmg"
+        mv "zed/target/x86_64-apple-darwin/release/Zed.dmg" "Zed-x86_64.dmg"
+        mv "zed/target/latest-sha" "latest-sha"
         ;;
     linux-targz)
         find . -type f -name "zed-*.tar.gz" -print0 | while IFS= read -r -d '' file_to_move; do
             mv "$file_to_move" "$(basename "$file_to_move")"
         done
-        mv "target/latest-sha" "latest-sha-linux-targz"
+        mv "zed/target/latest-sha" "latest-sha-linux-targz"
         ;;
     *)
         echo "Error: Unknown target '$target'"

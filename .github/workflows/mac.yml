@@ -1,11 +1,11 @@
 name: MacOS 编译
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   bundle-mac:
     timeout-minutes: 60
-    name: Create a macOS bundle
+    name: macOS 编译
     runs-on: macos-latest
     env:
       CARGO_TERM_COLOR: always
@@ -28,7 +28,7 @@ jobs:
           repository: zed-industries/zed
           ref: main
           path: zed
-          
+
       - name: 替换
         run: python3 replace.py
 
@@ -39,16 +39,24 @@ jobs:
       # - name: Cmake
       #   run: brew install cmake
 
-      - name: Set release channel to nightly
-        run: |
-          cd zed
-          set -eu
-          version=$(git rev-parse --short HEAD)
-          echo "Publishing version: ${version} on release channel nightly"
-          echo "nightly" > crates/zed/RELEASE_CHANNEL
+      # - name: Set release channel to nightly
+      #   run: |
+      #     cd zed
+      #     set -eu
+      #     version=$(git rev-parse --short HEAD)
+      #     echo "Publishing version: ${version} on release channel nightly"
+      #     echo "nightly" > crates/zed/RELEASE_CHANNEL
 
-      - name: Create macOS app bundle
+      - name: 编译
         run: cd zed && script/bundle-mac
 
-      - name: Upload Zed Nightly
-        run: cd zed && script/upload-nightly macos
+      - name: 移动文件
+        run: move macos
+
+      - name: 上传
+        uses: actions/upload-artifact@v4
+        with:
+          file: |
+            Zed-aarch64.dmg
+            Zed-x86_64.dmg
+            zed-remote-server-*.gz
