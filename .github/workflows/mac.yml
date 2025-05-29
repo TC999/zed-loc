@@ -16,18 +16,22 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "18"
+
       - name: 设置 Python 3.10
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
       - uses: actions/checkout@v4
+      - name: 手动同步 zed 源代码
+        uses: actions/checkout@v4
         with:
           repository: zed-industries/zed
           ref: main
-          path: zed        
-      - run: |
-          cd zed 
-          python3 replace.py
+          path: zed
+          
+      - name: 替换
+        run: python3 replace.py
+
       # - name: Xcode
       #   run: |
       #     sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
@@ -35,14 +39,7 @@ jobs:
       # - name: Cmake
       #   run: brew install cmake
 
-      - name: Set release channel to nightly
-        run: |
-          set -eu
-          version=$(git rev-parse --short HEAD)
-          echo "Publishing version: ${version} on release channel nightly"
-          echo "nightly" > crates/zed/RELEASE_CHANNEL
-
-      - name: Create macOS app bundle
+      - name: 编译包
         run: cd zed && script/bundle-mac
 
       - name: Upload Zed Nightly
