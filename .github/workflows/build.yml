@@ -229,7 +229,9 @@ jobs:
           mv artifacts/zed-linux-arm64.deb/zed-linux-arm64.deb zed-linux-arm64.deb
           mv artifacts/zed-linux-x86_64/zed-linux-x86_64.tar.gz zed-linux-x86_64.tar.gz
           mv artifacts/zed-linux-arm64/zed-linux-arm64.tar.gz zed-linux-arm64.tar.gz
-
+      - name: build sha256
+        run: |
+          sha256sum zed-windows.zip zed-linux-x86_64.deb zed-linux-arm64.deb zed-linux-x86_64.tar.gz zed-linux-arm64.tar.gz > sha256sums.txt
       - name: Upload release build artifacts to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -243,3 +245,4 @@ jobs:
             zed-linux-arm64.deb
             zed-linux-x86_64.tar.gz
             zed-linux-arm64.tar.gz
+            sha256sums.txt
