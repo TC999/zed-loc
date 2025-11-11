@@ -361,8 +361,9 @@ input_file_paths = [
     r'zed\crates\settings\src\settings_file.rs',
     r'zed\crates\settings\src\settings_store.rs',
     # settings_ui 设置UI
-    r'zed\crates\settings_ui\src\appearance_settings_controls.rs',
-    r'zed\crates\settings_ui\src\settings_ui.rs',
+    #r'zed\crates\settings_ui\src\appearance_settings_controls.rs',
+    #r'zed\crates\settings_ui\src\settings_ui.rs',
+    r'zed\crates\settings_ui\src\page_data.rs',
     # snippet
     r'zed\crates\snippet\src\snippet.rs',
     # snippet_ui
