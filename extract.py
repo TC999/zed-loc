@@ -467,9 +467,12 @@ for input_file_path in input_file_paths:
     with open(input_file_path, 'r', encoding='utf-8') as file:
         content = file.read()
 
-    # 使用正则表达式查找所有引号中的字符串，排除前面是 'json_path:' 的情况
-    pattern = r'(?<!json_path:\s*)"((?:\\.|[^"\\])*)"'
-    matches = re.findall(pattern, content)
+    # 先排除掉包含 "json_path:" 的行，然后再提取引号中的内容
+    filtered_content = re.sub(r'json_path:\s*".*?"', '', content)
+
+    # 使用正则提取引号中的字符串
+    pattern = r'"((?:\\.|[^"\\])*)"'  # 匹配引号中的字符串
+    matches = re.findall(pattern, filtered_content)
 
     # 构建JSON数据
     json_data[os.path.normpath(input_file_path).replace('\\', '/')] = {match: "" for match in matches}
