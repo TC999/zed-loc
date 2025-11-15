@@ -801,3 +801,60 @@ global: # 全局规则，对所有文件生效
   - "entries_by_id"
   - "~"
   - "fs-event-sentinel"
+
+# HTTP Headers and API related strings - should never be translated
+"zed/crates/open_ai/src/open_ai.rs":
+  - "Authorization"
+  - "Content-Type"
+  - "application/json"
+  - "Bearer {}"
+
+"zed/crates/zeta/src/zeta.rs":
+  - "Authorization"
+  - "Content-Type"
+  - "application/json"
+
+"zed/crates/git_hosting_providers/src/providers/github.rs":
+  - "Authorization"
+  - "Content-Type"
+  - "application/json"
+
+"zed/crates/git_hosting_providers/src/providers/codeberg.rs":
+  - "Authorization"
+  - "Content-Type"
+  - "application/json"
+
+"zed/crates/fireworks/src/fireworks.rs":
+  - "Authorization"
+  - "Content-Type"
+  - "application/json"
+
+"zed/crates/repl/src/kernels/remote_kernels.rs":
+  - "Authorization"
+  - "Content-Type"
+  - "application/json"
+  - "token {}"
+
+"zed/crates/git_hosting_providers/src/providers/gitlab.rs":
+  - "Authorization"
+  - "Content-Type"
+  - "application/json"
+
+"zed/crates/google_ai/src/google_ai.rs":
+  - "Content-Type"
+  - "application/json"
+
+"zed/crates/http_client/src/http_client.rs":
+  - "Content-Type"
+  - "application/json"
+
++"zed/crates/ollama/src/ollama.rs":
++  - "Authorization"
++  - "Content-Type"
++  - "application/json"
++  - "Bearer {api_key}"
+
++"zed/crates/assistant2/src/context_picker/fetch_context_picker.rs":
++  - "missing Content-Type header"
++  - "invalid Content-Type header"
++  - "Content-Type"
