@@ -802,6 +802,23 @@ global: # 全局规则，对所有文件生效
   - "~"
   - "fs-event-sentinel"
 
+# Anthropic-specific HTTP headers and API strings - should never be translated
+"zed/crates/anthropic/src/anthropic.rs":
+  - "missing header `{key}`"
+  - "data: "
+  - "Anthropic-Version"
+  - "Anthropic-Beta"
+  - "X-Api-Key"
+  - "2023-06-01"
+  - "prompt-caching-2024-07-31"
+  - "tool_use"
+  - "tool_result"
+  - "message_start"
+  - "content_block_start"
+  - "content_block_delta"
+  - "content_block_stop"
+  - "message_delta"
+
 # HTTP Headers and API related strings - should never be translated
 "zed/crates/open_ai/src/open_ai.rs":
   - "Authorization"
