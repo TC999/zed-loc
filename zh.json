@@ -88,8 +88,8 @@
     "failed to deserialize response body": "反序列化响应体失败",
     "failed to parse response body as UTF-8": "将响应体解析为 UTF-8 失败",
     "Failed to connect to API: {} {}": "连接 API 失败: {} {}",
-    "missing header `{key}`": "丢失头部 `{key}`",
-    "data: ": "数据: ",
+    "missing header `{key}`": "",
+    "data: ": "",
     "Unexpected success response while expecting an error: '{body_str}'": "期望错误时出现意外成功响应: '{body_str}'",
     "tool not used": "未使用工具",
     "lowercase": "",
@@ -98,7 +98,7 @@
     "image": "",
     "ping": "",
     "error": "",
-    "an error occurred while interacting with the Anthropic API: {error_type}: {message}": ""
+    "an error occurred while interacting with the Anthropic API: {error_type}: {message}": "与 Anthropic API 交互时发生错误: {error_type}: {message}"
   },
   "zed/crates/assets/src/assets.rs": {
     "could not find asset at path \"{}\"": "无法在路径 \"{}\" 找到资源",
@@ -576,8 +576,8 @@
   "zed/crates/assistant2/src/context_picker/fetch_context_picker.rs": {
     "error reading response body": "读取响应正文时出错",
     "status error {}, response: {text:?}": "状态错误 {}, 响应: {text:?}",
-    "missing Content-Type header": "丢失 Content-Type 标头",
-    "invalid Content-Type header": "无效 Content-Type 标头",
+    "missing Content-Type header": "",
+    "invalid Content-Type header": "",
     "Enter the URL that you would like to fetch": "键入您想要获取的 URL",
     "Enter a URL…": "键入 URL…",
     "Added": "添加"
@@ -3393,7 +3393,7 @@
     "invalid model id": "",
     "type": "",
     "role": "",
-    "Authorization": "验证",
+    "Authorization": "",
     "Bearer {}": "",
     "Failed to connect to OpenAI API: {}": "",
     "Failed to connect to OpenAI API: {} {}": "",
@@ -5867,7 +5867,7 @@
     "untitled": "",
     "Events:\n{}\nExcerpt:\n{}": "",
     "completion response: {}": "",
-    "Authorization": "授权",
+    "Authorization": "",
     "error predicting edits.\nStatus: {:?}\nBody: {}": "预测编辑时出错。\n状态: {:?}\n正文: {}",
     "expected exactly one start marker, found {}": "预期正好有一个起始标记，找到 {}",
     "expected exactly one end marker, found {}": "预期正好有一个结束标记，找到 {}",

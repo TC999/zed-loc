@@ -172,3 +172,4 @@ cython_debug/
 
 # zed 程序源码
 zed/
+verify_fix.py
