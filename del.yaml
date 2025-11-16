@@ -33,6 +33,8 @@ global: # 全局规则，对所有文件生效
   - "activity-indicator-trigger"
   - "activity-indicator-status"
 "zed/crates/anthropic/src/anthropic.rs":
+  - "missing header `{key}`"
+  - "data: "
   - "https://api.anthropic.com"
   - "schemars"
   - "claude-3-5-sonnet"
@@ -802,23 +804,6 @@ global: # 全局规则，对所有文件生效
   - "~"
   - "fs-event-sentinel"
 
-# Anthropic-specific HTTP headers and API strings - should never be translated
-"zed/crates/anthropic/src/anthropic.rs":
-  - "missing header `{key}`"
-  - "data: "
-  - "Anthropic-Version"
-  - "Anthropic-Beta"
-  - "X-Api-Key"
-  - "2023-06-01"
-  - "prompt-caching-2024-07-31"
-  - "tool_use"
-  - "tool_result"
-  - "message_start"
-  - "content_block_start"
-  - "content_block_delta"
-  - "content_block_stop"
-  - "message_delta"
-
 # HTTP Headers and API related strings - should never be translated
 "zed/crates/open_ai/src/open_ai.rs":
   - "Authorization"
@@ -865,13 +850,8 @@ global: # 全局规则，对所有文件生效
   - "Content-Type"
   - "application/json"
 
-+"zed/crates/ollama/src/ollama.rs":
-+  - "Authorization"
-+  - "Content-Type"
-+  - "application/json"
-+  - "Bearer {api_key}"
-
-+"zed/crates/assistant2/src/context_picker/fetch_context_picker.rs":
-+  - "missing Content-Type header"
-+  - "invalid Content-Type header"
-+  - "Content-Type"
+"zed/crates/ollama/src/ollama.rs":
+  - "Authorization"
+  - "Content-Type"
+  - "application/json"
+  - "Bearer {api_key}"

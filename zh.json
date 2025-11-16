@@ -88,8 +88,6 @@
     "failed to deserialize response body": "反序列化响应体失败",
     "failed to parse response body as UTF-8": "将响应体解析为 UTF-8 失败",
     "Failed to connect to API: {} {}": "连接 API 失败: {} {}",
-    "missing header `{key}`": "",
-    "data: ": "",
     "Unexpected success response while expecting an error: '{body_str}'": "期望错误时出现意外成功响应: '{body_str}'",
     "tool not used": "未使用工具",
     "lowercase": "",
@@ -576,8 +574,6 @@
   "zed/crates/assistant2/src/context_picker/fetch_context_picker.rs": {
     "error reading response body": "读取响应正文时出错",
     "status error {}, response: {text:?}": "状态错误 {}, 响应: {text:?}",
-    "missing Content-Type header": "",
-    "invalid Content-Type header": "",
     "Enter the URL that you would like to fetch": "键入您想要获取的 URL",
     "Enter a URL…": "键入 URL…",
     "Added": "添加"
