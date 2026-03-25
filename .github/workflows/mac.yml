@@ -76,22 +76,22 @@ jobs:
           cd zed
           ./script/bundle-mac ${{ matrix.target }}
 
-      - name: 重命名/移动产物（按架构区分）
-        shell: bash
-        run: |
-          set -euo pipefail
-          # 下面这段逻辑假设 bundle-mac 会在仓库根目录或 zed 目录生成 dmg；
-          # 你可以按实际产物位置微调。
-          if [[ -f "${{ matrix.dmg }}" ]]; then
-            echo "Found ${{ matrix.dmg }} in workspace root"
-          elif [[ -f "zed/${{ matrix.dmg }}" ]]; then
-            mv "zed/${{ matrix.dmg }}" "${{ matrix.dmg }}"
-          else
-            echo "ERROR: cannot find dmg: ${{ matrix.dmg }}"
-            ls -la
-            ls -la zed || true
-            exit 1
-          fi
+      #- name: 重命名/移动产物（按架构区分）
+      #  shell: bash
+      #  run: |
+      #    set -euo pipefail
+      #    # 下面这段逻辑假设 bundle-mac 会在仓库根目录或 zed 目录生成 dmg；
+      #    # 你可以按实际产物位置微调。
+      #    if [[ -f "${{ matrix.dmg }}" ]]; then
+      #      echo "Found ${{ matrix.dmg }} in workspace root"
+      #    elif [[ -f "zed/${{ matrix.dmg }}" ]]; then
+      #      mv "zed/${{ matrix.dmg }}" "${{ matrix.dmg }}"
+      #    else
+      #      echo "ERROR: cannot find dmg: ${{ matrix.dmg }}"
+      #      ls -la
+      #      ls -la zed || true
+      #      exit 1
+      #    fi
 
       - name: 上传（按架构）
         uses: actions/upload-artifact@v4
