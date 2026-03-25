@@ -89,6 +89,10 @@ jobs:
 
   build-dpkg-x86:
     runs-on: ubuntu-22.04
+    env:
+      CARGO_TERM_COLOR: always
+      CC: clang-18
+      CXX: clang++-18
     steps:
       - name: 设置 Python 3.10
         uses: actions/setup-python@v3
@@ -151,6 +155,10 @@ jobs:
 
   build-dpkg-arm:
     runs-on: ubuntu-22.04-arm
+    env:
+      CARGO_TERM_COLOR: always
+      CC: clang-18
+      CXX: clang++-18
 
     steps:
       - name: 设置 Python 3.10
