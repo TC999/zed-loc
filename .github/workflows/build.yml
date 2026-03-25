@@ -111,11 +111,11 @@ jobs:
         uses: matbour/setup-sentry-cli@3e938c54b3018bdd019973689ef984e033b0454b
 
       - name: 设置
-        run: ./script/linux
+        run: ./zed/script/linux
       - name: 下载 wasi sdk
-        run: ./script/download-wasi-sdk
+        run: ./zed/script/download-wasi-sdk
       - name: 编译
-        run: ./script/bundle-linux
+        run: ./zed/script/bundle-linux
 
       - name: 移动文件
         run: mv zed/target/release/zed*.tar.gz zed-linux-x86_64.tar.gz
@@ -166,11 +166,11 @@ jobs:
         run: python3 replace.py
 
       - name: 设置
-        run: ./script/linux
+        run: ./zed/script/linux
       - name: 下载 wasi sdk
-        run: ./script/download-wasi-sdk
+        run: ./zed/script/download-wasi-sdk
       - name: 编译
-        run: ./script/bundle-linux
+        run: ./zed/script/bundle-linux
 
       - name: 移动
         run: mv zed/target/release/zed*.tar.gz zed-linux-arm64.tar.gz
