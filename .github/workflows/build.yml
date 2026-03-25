@@ -107,14 +107,15 @@ jobs:
       - name: 将 Rust 添加到 PATH
         run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-      - name: 安装 Linux 依赖项
-        run: ./zed/script/linux && ./zed/script/install-mold 2.34.0
+      - name: Setup Sentry CLI
+        uses: matbour/setup-sentry-cli@3e938c54b3018bdd019973689ef984e033b0454b
 
-      - name: 限制目标目录大小
-        run: zed/script/clear-target-dir-if-larger-than 100
-
-      - name: 创建 Linux .tar.gz 包
-        run: cd zed && script/bundle-linux
+      - name: 设置
+        run: ./script/linux
+      - name: 下载 wasi sdk
+        run: ./script/download-wasi-sdk
+      - name: 编译
+        run: ./script/bundle-linux
 
       - name: 移动文件
         run: mv zed/target/release/zed*.tar.gz zed-linux-x86_64.tar.gz
@@ -164,17 +165,12 @@ jobs:
       - name: 替换
         run: python3 replace.py
 
-      - name: 安装 Linux 依赖项
-        run: ./zed/script/linux
-
-      - name: Setup Sentry CLI
-        uses: matbour/setup-sentry-cli@3e938c54b3018bdd019973689ef984e033b0454b
-
-      - name: 限制目标目录大小
-        run: zed/script/clear-target-dir-if-larger-than 100
-
-      - name: 创建 Linux .tar.gz 包
-        run: cd zed && script/bundle-linux
+      - name: 设置
+        run: ./script/linux
+      - name: 下载 wasi sdk
+        run: ./script/download-wasi-sdk
+      - name: 编译
+        run: ./script/bundle-linux
 
       - name: 移动
         run: mv zed/target/release/zed*.tar.gz zed-linux-arm64.tar.gz
