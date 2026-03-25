@@ -115,7 +115,9 @@ jobs:
       - name: 下载 wasi sdk
         run: ./zed/script/download-wasi-sdk
       - name: 编译
-        run: ./zed/script/bundle-linux
+        run: |
+         cd zed
+          ./script/bundle-linux
 
       - name: 移动文件
         run: mv zed/target/release/zed*.tar.gz zed-linux-x86_64.tar.gz
@@ -170,7 +172,9 @@ jobs:
       - name: 下载 wasi sdk
         run: ./zed/script/download-wasi-sdk
       - name: 编译
-        run: ./zed/script/bundle-linux
+        run: |
+          cd zed
+          ./script/bundle-linux
 
       - name: 移动
         run: mv zed/target/release/zed*.tar.gz zed-linux-arm64.tar.gz
