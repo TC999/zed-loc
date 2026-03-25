@@ -1,4 +1,5 @@
 name: MacOS 编译
+
 on:
   workflow_dispatch:
     inputs:
@@ -10,23 +11,41 @@ on:
 jobs:
   bundle-mac:
     timeout-minutes: 60
-    name: macOS 编译
-    runs-on: macos-latest
+    name: 编译 (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: MacOS arm64
+            os: macos-latest
+            target: aarch64-apple-darwin
+            dmg: Zed-aarch64.dmg
+          - name: MacOS x86_64
+            os: macos-15-intel
+            target: x86_64-apple-darwin
+            dmg: Zed-x86_64.dmg
+
+    runs-on: ${{ matrix.os }}
+
     env:
       CARGO_TERM_COLOR: always
       CARGO_INCREMENTAL: 0
       RUST_BACKTRACE: 1
+
     steps:
       - name: Install Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: "18"
+          node-version: "20"
 
       - name: 设置 Python 3.10
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Checkout 当前仓库
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
       - name: 手动同步 zed 源代码
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -45,33 +64,39 @@ jobs:
       - name: Cmake
         run: brew install cmake
 
-      # - name: Set release channel to nightly
-      #   run: |
-      #     cd zed
-      #     set -eu
-      #     version=$(git rev-parse --short HEAD)
-      #     echo "Publishing version: ${version} on release channel nightly"
-      #     echo "nightly" > crates/zed/RELEASE_CHANNEL
-
-      - name: 安装 Rust
+      - name: 安装 Rust target
         run: |
-          rustup target add x86_64-apple-darwin
+          rustup target add ${{ matrix.target }}
 
-      - name: 编译
+      - name: steps::clear_target_dir_if_large
+        run: ./zed/script/clear-target-dir-if-larger-than 300
+
+      - name: run_bundling::bundle_mac::bundle_mac
         run: |
-          #export CC=/usr/bin/clang
-          #export CXX=/usr/bin/clang++
-          #export CXXFLAGS="-std=c++17"
-          #export CXXFLAGS="-D_LIBCPP_ENABLE_CXX20_FEATURES"
-          cd zed && script/bundle-mac
+          cd zed
+          ./script/bundle-mac ${{ matrix.target }}
 
-      - name: 移动文件
-        run: move macos
+      - name: 重命名/移动产物（按架构区分）
+        shell: bash
+        run: |
+          set -euo pipefail
+          # 下面这段逻辑假设 bundle-mac 会在仓库根目录或 zed 目录生成 dmg；
+          # 你可以按实际产物位置微调。
+          if [[ -f "${{ matrix.dmg }}" ]]; then
+            echo "Found ${{ matrix.dmg }} in workspace root"
+          elif [[ -f "zed/${{ matrix.dmg }}" ]]; then
+            mv "zed/${{ matrix.dmg }}" "${{ matrix.dmg }}"
+          else
+            echo "ERROR: cannot find dmg: ${{ matrix.dmg }}"
+            ls -la
+            ls -la zed || true
+            exit 1
+          fi
 
-      - name: 上传
+      - name: 上传（按架构）
         uses: actions/upload-artifact@v4
         with:
+          name: ${{ matrix.target }}
           path: |
-            Zed-aarch64.dmg
-            Zed-x86_64.dmg
-            zed-remote-server-*.gz
+            zed/target/${{ matrix.target }}/release/Zed-*.dmg
+            zed/target/zed-remote-server-*.gz
