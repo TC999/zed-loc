@@ -118,6 +118,10 @@ jobs:
         run: ./zed/script/linux
       - name: 下载 wasi sdk
         run: ./zed/script/download-wasi-sdk
+
+      - name: 安装 clang-18
+        run: sudo apt-get install -y clang-18
+        
       - name: 编译
         run: |
          cd zed
@@ -177,6 +181,9 @@ jobs:
 
       - name: 设置
         run: ./zed/script/linux
+
+      - name: 安装 clang-18
+        run: sudo apt-get install -y clang-18
       - name: 下载 wasi sdk
         run: ./zed/script/download-wasi-sdk
       - name: 编译
