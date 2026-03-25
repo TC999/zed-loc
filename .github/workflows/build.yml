@@ -120,8 +120,11 @@ jobs:
         run: ./zed/script/download-wasi-sdk
 
       - name: 安装 clang-18
-        run: sudo apt-get install -y clang-18
-        
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 18
+
       - name: 编译
         run: |
          cd zed
@@ -183,7 +186,11 @@ jobs:
         run: ./zed/script/linux
 
       - name: 安装 clang-18
-        run: sudo apt-get install -y clang-18
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 18
+          
       - name: 下载 wasi sdk
         run: ./zed/script/download-wasi-sdk
       - name: 编译
