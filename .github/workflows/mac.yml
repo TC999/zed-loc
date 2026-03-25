@@ -10,7 +10,6 @@ on:
 
 jobs:
   bundle-mac:
-    timeout-minutes: 60
     name: 编译 (${{ matrix.name }})
     strategy:
       fail-fast: false
