@@ -230,7 +230,7 @@ jobs:
 
   release:
     if: (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch' && inputs.release)
-    needs: [build-windows, build-dpkg-x86, build-dpkg-arm]
+    needs: [build-windows, build-dpkg-x86]
     runs-on: ubuntu-latest
     permissions:
       contents: write
