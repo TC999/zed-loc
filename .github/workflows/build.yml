@@ -160,6 +160,12 @@ jobs:
           name: zed-linux-x86_64.deb
           path: zed-linux-x86_64.deb
 
+      - name: 上传 zed-remote-server-linux-x86_64.gz
+        uses: actions/upload-artifact@v4
+        with:
+          name: zed-remote-server-linux-x86_64.gz
+          path: target/zed-remote-server-linux-x86_64.gz
+
   build-dpkg-arm:
     runs-on: ubuntu-22.04-arm
     env:
@@ -228,9 +234,89 @@ jobs:
           name: zed-linux-arm64.deb
           path: zed-linux-arm64.deb
 
+      - name: 上传 zed-remote-server-linux-aarch64.gz
+        uses: actions/upload-artifact@v4
+        with:
+          name: zed-remote-server-linux-aarch64.gz
+          path: target/zed-remote-server-linux-aarch64.gz
+
+  build-mac:
+    name: 编译 (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: MacOS arm64
+            os: macos-latest
+            target: aarch64-apple-darwin
+            dmg: Zed-aarch64.dmg
+          - name: MacOS x86_64
+            os: macos-15-intel
+            target: x86_64-apple-darwin
+            dmg: Zed-x86_64.dmg
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      CARGO_TERM_COLOR: always
+      CARGO_INCREMENTAL: 0
+      RUST_BACKTRACE: 1
+
+    steps:
+      - name: Install Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "20"
+
+      - name: 设置 Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+
+      - name: Checkout 当前仓库
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: 手动同步 zed 源代码
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: zed-industries/zed
+          ref: ${{ inputs.branch }}
+          path: zed
+
+      - name: 替换
+        run: python3 replace.py
+
+      - name: Xcode
+        run: |
+          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+          sudo xcodebuild -license accept
+
+      - name: Cmake
+        run: brew install cmake
+
+      - name: 安装 Rust target
+        run: |
+          rustup target add ${{ matrix.target }}
+
+      - name: steps::clear_target_dir_if_large
+        run: ./zed/script/clear-target-dir-if-larger-than 300
+
+      - name: run_bundling::bundle_mac::bundle_mac
+        run: |
+          cd zed
+          ./script/bundle-mac ${{ matrix.target }}
+
+      - name: 上传（按架构）
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}
+          path: |
+            zed/target/${{ matrix.target }}/release/Zed-*.dmg
+            zed/target/zed-remote-server-*.gz
+
   release:
     if: (github.event_name == 'schedule') || (github.event_name == 'workflow_dispatch' && inputs.release)
-    needs: [build-windows, build-dpkg-x86]
+    needs: [build-windows, build-dpkg-x86, build-mac]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -257,10 +343,21 @@ jobs:
           # mv artifacts/zed-linux-arm64.deb/zed-linux-arm64.deb zed-linux-arm64.deb
           mv artifacts/zed-linux-x86_64/zed-linux-x86_64.tar.gz zed-linux-x86_64.tar.gz
           # mv artifacts/zed-linux-arm64/zed-linux-arm64.tar.gz zed-linux-arm64.tar.gz
+          mv artifacts/zed-remote-server-linux-x86_64.gz/zed-remote-server-linux-x86_64.gz zed-remote-server-linux-x86_64.gz
+          # mv artifacts/zed-remote-server-linux-aarch64.gz/zed-remote-server-linux-aarch64.gz zed-remote-server-linux-aarch64.gz
+
+
+      - name: macos
+        run: |
+          mv artifacts/aarch64-apple-darwin/aarch64-apple-darwin/release/Zed-*.dmg zed-macos-aarch64.dmg
+          mv artifacts/aarch64-apple-darwin/zed-remote-server-*.gz zed-remote-server-macos-aarch64.gz
+          mv artifacts/x86_64-apple-darwin/x86_64-apple-darwin/release/Zed-*.dmg zed-macos-x86_64.dmg
+          mv artifacts/x86_64-apple-darwin/zed-remote-server-*.gz zed-remote-server-macos-x86_64.gz
+
       - name: build sha256
         run: |
           # sha256sum zed-windows.zip zed-linux-x86_64.deb zed-linux-arm64.deb zed-linux-x86_64.tar.gz zed-linux-arm64.tar.gz > sha256sums.txt
-          sha256sum zed-windows.zip zed-linux-x86_64.deb zed-linux-x86_64.tar.gz > sha256sums.txt
+          sha256sum zed-windows.zip zed-linux-x86_64.deb zed-linux-x86_64.tar.gz zed-macos-aarch64.dmg zed-macos-x86_64.dmg zed-remote-server-linux-x86_64.gz zed-remote-server-macos-aarch64.gz zed-remote-server-macos-x86_64.gz > sha256sums.txt
 
       - name: Upload release build artifacts to GitHub Release
         uses: softprops/action-gh-release@v2
@@ -275,4 +372,10 @@ jobs:
             zed-linux-arm64.deb
             zed-linux-x86_64.tar.gz
             zed-linux-arm64.tar.gz
+            zed-macos-aarch64.dmg
+            zed-macos-x86_64.dmg
+            zed-remote-server-linux-x86_64.gz
+            zed-remote-server-linux-aarch64.gz
+            zed-remote-server-macos-aarch64.gz
+            zed-remote-server-macos-x86_64.gz
             sha256sums.txt
