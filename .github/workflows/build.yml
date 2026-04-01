@@ -164,7 +164,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: zed-remote-server-linux-x86_64.gz
-          path: target/zed-remote-server-linux-x86_64.gz
+          path: zed/target/zed-remote-server-linux-x86_64.gz
 
   build-dpkg-arm:
     runs-on: ubuntu-22.04-arm
@@ -238,7 +238,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: zed-remote-server-linux-aarch64.gz
-          path: target/zed-remote-server-linux-aarch64.gz
+          path: zed/target/zed-remote-server-linux-aarch64.gz
 
   build-mac:
     name: 编译 (${{ matrix.name }})
