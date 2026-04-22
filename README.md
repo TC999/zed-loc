@@ -94,6 +94,9 @@ cargo run
 <a href="https://github.com/TC999" title="陈生杂物房">
   <img src="https://avatars.githubusercontent.com/u/88823709?v=4" width="42;" alt="陈生杂物房"/>
 </a>
+<a href="https://github.com/zhai23" title="shuishan">
+  <img src="https://avatars.githubusercontent.com/u/64952459?v=4" width="42;" alt="shuishan"/>
+</a>
 <a href="https://github.com/shenjackyuanjie" title="shenjack">
   <img src="https://avatars.githubusercontent.com/u/54507071?v=4" width="42;" alt="shenjack"/>
 </a>
@@ -102,6 +105,9 @@ cargo run
 </a>
 <a href="https://github.com/fage520" title="fage520">
   <img src="https://avatars.githubusercontent.com/u/58712266?v=4" width="42;" alt="fage520"/>
+</a>
+<a href="https://github.com/reigadegr" title="reigadegr">
+  <img src="https://avatars.githubusercontent.com/u/103645642?v=4" width="42;" alt="reigadegr"/>
 </a>
 <a href="https://github.com/21307369" title="21307369">
   <img src="https://avatars.githubusercontent.com/u/47931342?v=4" width="42;" alt="21307369"/>
