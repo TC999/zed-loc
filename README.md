@@ -13,7 +13,11 @@
 
 ## 项目简介
 
-`zed-loc` 是一个用于本地化 [Zed 编辑器](https://github.com/zed-industries/zed)的工具。它提取源代码中的字符串并生成 JSON 文件，以便进行翻译和本地化，同时支持替换后直接构建可执行文件。
+`zed-loc` 是一个用于本地化 [Zed 编辑器][zed-url]的工具。它提取源代码中的字符串并生成 JSON 文件，以便进行翻译和本地化，同时支持替换后直接构建可执行文件。
+
+## 问题反馈
+
+**只**接受汉化相关反馈，除非你确定该问题由汉化引起，否则请前往 [Zed 编辑器][zed-issues-url]反馈
 
 ## 特性
 
@@ -137,3 +141,6 @@ cargo run
 
 [license-url]: https://github.com/TC999/zed-loc/blob/master/LICENSE "许可证"
 [license-image]: https://custom-icon-badges.demolab.com/github/license/TC999/zed-loc?style=flat&logo=law&label=%E8%AE%B8%E5%8F%AF%E8%AF%81
+
+[zed-url]: https://github.com/zed-industries/zed
+[zed-issues-url]: https://github.com/zed-industries/zed/issues
